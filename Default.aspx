@@ -4,12 +4,16 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title></title>
+    <title>Assignment Github</title>
+    <link rel="stylesheet" href="/CSS/skeleton.css" />
+    <link rel="stylesheet" href="/CSS/normalize.css" />
 </head>
 <body>
     <form id="form1" runat="server">
-    <div>
-    
+    <div class="container">
+        <div class="row">
+
+        </div>
     </div>
     </form>
 </body>
