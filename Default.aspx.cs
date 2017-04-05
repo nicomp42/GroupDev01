@@ -46,7 +46,8 @@ private void PopulateDropDown()
     }
 */
 
-public partial class _Default : System.Web.UI.Page {
+public partial class _Default : System.Web.UI.Page
+{
 
     private static System.Data.SqlClient.SqlConnection conn;
     private static SqlCommand comm;
@@ -59,7 +60,12 @@ public partial class _Default : System.Web.UI.Page {
     static Group05 group05;
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (!IsPostBack)
+        {
+            OpenConnection();
+        }
         instantiateObjects();
+        Group01Method();
     }
 
     private void instantiateObjects()
@@ -70,10 +76,7 @@ public partial class _Default : System.Web.UI.Page {
         group04 = new Group04();
         group05 = new Group05();
 
-        if(!IsPostBack)
-        {
-            OpenConnection();
-        }
+
     }
 
     private void Group01Method()
@@ -94,7 +97,7 @@ public partial class _Default : System.Web.UI.Page {
 
         reader.Read();
 
-
+        lblProductWithMostReturns.Text = reader.GetString(0) + reader.GetString(1);
     }
 
     private void OpenConnection()
@@ -122,7 +125,7 @@ public partial class _Default : System.Web.UI.Page {
     /**
      * Returns a settings object that holds the connection string for the database
      */
-private System.Configuration.ConnectionStringSettings ReadConnectionString()
+    private System.Configuration.ConnectionStringSettings ReadConnectionString()
     {
         //string to store the path so the web.config file
         String strPath;
