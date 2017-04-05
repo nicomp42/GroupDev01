@@ -81,24 +81,94 @@ public partial class _Default : System.Web.UI.Page
 
     private void Group01Method()
     {
-        int productIDWithMostReturns = group01.GetProductIDWithTheMostReturns();
+        int productIDWithMostReturns = 0;
 
-        comm = new SqlCommand("SELECT tProduct.Description, tName.Name FROM tProduct INNER JOIN tName ON tProduct.NameID = tName.NameID WHERE(tProduct.ProductID = " + productIDWithMostReturns + ")", conn);
-        //try to close the reader in case it's stil open, do nothing if we can't
         try
         {
-            reader.Close();
+            productIDWithMostReturns = group01.GetProductIDWithTheMostReturns();
         }
         catch (Exception ex)
+        {}
+
+        if (productIDWithMostReturns != 0)
         {
+            comm = new SqlCommand("SELECT tProduct.Description, tName.Name FROM tProduct INNER JOIN tName ON tProduct.NameID = tName.NameID WHERE(tProduct.ProductID = " + productIDWithMostReturns + ")", conn);
+            //try to close the reader in case it's stil open, do nothing if we can't
+            try
+            {
+                reader.Close();
+            }
+            catch (Exception ex)
+            { }
+
+            reader = comm.ExecuteReader();
+
+            reader.Read();
+
+            lblProductWithMostReturns.Text = reader.GetString(0) + reader.GetString(1);
         }
-
-        reader = comm.ExecuteReader();
-
-        reader.Read();
-
-        lblProductWithMostReturns.Text = reader.GetString(0) + reader.GetString(1);
     }
+
+    private void Group02Method()
+    {
+        int storeIDWithMostSales = 0;
+
+        try
+        {
+            storeIDWithMostSales = group02.GetStoreIDWithTheMostTotalSales();
+        }
+        catch (Exception ex)
+        { }
+
+        if (storeIDWithMostSales != 0)
+        {
+            comm = new SqlCommand("SELECT store FROM tStore WHERE StoreID =" + storeIDWithMostSales + ")", conn);
+            //try to close the reader in case it's stil open, do nothing if we can't
+            try
+            {
+                reader.Close();
+            }
+            catch (Exception ex)
+            { }
+
+            reader = comm.ExecuteReader();
+
+            reader.Read();
+
+            lblStoreWithMostSales.Text = reader.GetString(0);
+        }
+    }
+
+    private void Group03Method()
+    {
+        int storeIDWithMostSales = 0;
+
+        try
+        {
+            storeIDWithMostSales = group02.GetStoreIDWithTheMostTotalSales();
+        }
+        catch (Exception ex)
+        { }
+
+        if (storeIDWithMostSales != 0)
+        {
+            comm = new SqlCommand("SELECT store FROM tStore WHERE StoreID =" + storeIDWithMostSales + ")", conn);
+            //try to close the reader in case it's stil open, do nothing if we can't
+            try
+            {
+                reader.Close();
+            }
+            catch (Exception ex)
+            { }
+
+            reader = comm.ExecuteReader();
+
+            reader.Read();
+
+            lblStoreWithMostSales.Text = reader.GetString(0);
+        }
+    }
+
 
     private void OpenConnection()
     {
