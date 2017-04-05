@@ -1,4 +1,9 @@
-﻿using System;
+﻿/*
+ * Group Project for IT3047
+ * Bill Nicholson
+ * nicholdw@ucmauil.uc.edu
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
