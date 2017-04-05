@@ -19,6 +19,6 @@ public class Group05 {
     }
     public int GetProductIDOfTheProductThatHasBeenReturnedTheMost() {
         throw new Exception("Group05.GetProductIDOfTheProductThatHasBeenReturnedTheMost(): Not implemented");
-        return -1;
+        //return -1;
     }
 }
