@@ -122,7 +122,7 @@ public partial class _Default : System.Web.UI.Page
 
         if (storeIDWithMostSales != 0)
         {
-            comm = new SqlCommand("SELECT store FROM tStore WHERE StoreID =" + storeIDWithMostSales + ")", conn);
+            comm = new SqlCommand("SELECT Store FROM tStore WHERE StoreID =" + storeIDWithMostSales + ")", conn);
             //try to close the reader in case it's stil open, do nothing if we can't
             try
             {
@@ -141,18 +141,18 @@ public partial class _Default : System.Web.UI.Page
 
     private void Group03Method()
     {
-        int storeIDWithMostSales = 0;
+        int emplIDWorkedMostDays = 0;
 
         try
         {
-            storeIDWithMostSales = group02.GetStoreIDWithTheMostTotalSales();
+            emplIDWorkedMostDays = group03.GetEmplIDWhoWorkedTheMostDays();
         }
         catch (Exception ex)
         { }
 
-        if (storeIDWithMostSales != 0)
+        if (emplIDWorkedMostDays != 0)
         {
-            comm = new SqlCommand("SELECT store FROM tStore WHERE StoreID =" + storeIDWithMostSales + ")", conn);
+            comm = new SqlCommand("SELECT FirstName, LastName FROM tEmpl WHERE EmplID =" + emplIDWorkedMostDays + ")", conn);
             //try to close the reader in case it's stil open, do nothing if we can't
             try
             {
