@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 
 /// <summary>
-/// Summary description for Config
+/// Configuration class for the website
 /// </summary>
 public class Config
 {
@@ -14,4 +14,5 @@ public class Config
         // TODO: Add constructor logic here
         //
     }
+
 }
