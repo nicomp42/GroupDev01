@@ -29,7 +29,7 @@ public class Group01
     /// Justin Meyer
     /// </author>
     /// <returns>ProductID with most Returns</returns>
-    public static int GetProductIDWithTheMostReturns()
+    public int GetProductIDWithTheMostReturns()
     {
         vProductIDWithTheMostReturnsTableAdapter pIDWithMostReturns = new vProductIDWithTheMostReturnsTableAdapter();
         ds_ProductIDWithMostReturns.vProductIDWithTheMostReturnsDataTable pIDWithMostReturnsDataTable = pIDWithMostReturns.GetData();
