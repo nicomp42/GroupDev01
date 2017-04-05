@@ -18,7 +18,8 @@ public class Group02 {
         //
     }
     public int GetStoreIDWithTheMostTotalSales() {
-        return -1;
+        throw new Exception("Group02.GetStoreIDWithTheMostTotalSales() not implemented");
+        //return -1;
     }
 
 }

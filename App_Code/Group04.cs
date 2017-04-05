@@ -18,7 +18,8 @@ public class Group04 {
         // TODO: Add constructor logic here
         //
     }
-    public List<int> GetIDsOfAllStoresInIndiana() {
-        return new List<int>();
+    public List<int> GetIDsOfAllStoresInAState(int stateID) {
+        throw new Exception("Group04.GetIDsOfAllStoresInAState(int stateID) not implemented");
+        //return new List<int>();
     }
 }
