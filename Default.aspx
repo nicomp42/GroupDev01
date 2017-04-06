@@ -51,7 +51,7 @@
                 <asp:DropDownList ID="ddlStates" runat="server"></asp:DropDownList>
             </div>
             <div class="two columns">
-                <asp:Button ID="btnSelectState" runat="server" Text="Go" />
+                <asp:Button ID="btnSelectState" runat="server" Text="Go" OnClick="btnSelectState_Click" />
             </div>
         </div>
         <div class="row">

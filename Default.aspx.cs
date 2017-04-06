@@ -10,12 +10,12 @@ using System.Web.UI.WebControls;
 private void PopulateDropDown()
     {
         //variables to hold the data returned by the query and add it to the dropdown menu
-        int modelID;
-        string model;
-        ListItem modelItem;
+        int stateID;
+        string state;
+        ListItem stateItem;
 
         // Clear the list box, in case we've already loaded something into it.
-        drpModel.Items.Clear();
+        ddlStates.Items.Clear();
         // create sql command object with the open connection object
         comm = new SqlCommand("SELECT * FROM tRobo", conn);
         //try to close the reader in case it's stil open, do nothing if we can't
@@ -32,17 +32,17 @@ private void PopulateDropDown()
         //iterate through the dataset line by line
         while (reader.Read())
         {
-            //stores the primary key of the model
-            modelID = reader.GetInt32(0);
-            //stores the name of the model
-            model = reader.GetString(1);
-            //creates a list item with the text of the name of the model, and the value of the primary key of the model
-            modelItem = new ListItem(model, modelID.ToString());
+            //stores the primary key of the state
+            stateID = reader.GetInt32(0);
+            //stores the name of the state
+            state = reader.GetString(1);
+            //creates a list item with the text of the name of the state, and the value of the primary key of the state
+            stateItem = new ListItem(state, stateID.ToString());
             //adds the item to the dropdown menu
-            drpModel.Items.Add(modelItem);
+            ddlStates.Items.Add(stateItem);
         }
-        //populates the options list box with options for the default model in the dropdown
-        PopulateOptionList(Convert.ToInt32(drpModel.SelectedValue));
+        //populates the options list box with options for the default state in the dropdown
+        PopulateOptionList(Convert.ToInt32(ddlStates.SelectedValue));
     }
 */
 
@@ -63,9 +63,12 @@ public partial class _Default : System.Web.UI.Page
         if (!IsPostBack)
         {
             OpenConnection();
+            instantiateObjects();
+            PopulateStateDropdown();
+            Group01Method();
+            Group02Method();
+            Group03Method();
         }
-        instantiateObjects();
-        Group01Method();
     }
 
     private void instantiateObjects()
@@ -165,7 +168,7 @@ public partial class _Default : System.Web.UI.Page
 
             reader.Read();
 
-            lblStoreWithMostSales.Text = reader.GetString(0);
+            lblEmployeeWhoWorkedMost.Text = reader.GetString(0);
         }
     }
 
@@ -214,5 +217,77 @@ public partial class _Default : System.Web.UI.Page
 
         //returns our connection string settings object
         return connString;
+    }
+
+    private void PopulateStateDropdown()
+    {
+        //variables to hold the data returned by the query and add it to the dropdown menu
+        string state;
+        ListItem stateItem;
+
+        // Clear the list box, in case we've already loaded something into it.
+        ddlStates.Items.Clear();
+        // create sql command object with the open connection object
+        comm = new SqlCommand("SELECT DISTINCT State FROM tStore", conn);
+        //try to close the reader in case it's stil open, do nothing if we can't
+        try
+        {
+            reader.Close();
+        }
+        catch (Exception ex)
+        {
+        }
+
+        //use the reader object to execuet our query
+        reader = comm.ExecuteReader();
+
+        //iterate through the dataset line by line
+        while (reader.Read())
+        {
+            //stores the name of the state
+            state = reader.GetString(0);
+            //creates a list item with the text of the name of the state, and the value of the primary key of the state
+            stateItem = new ListItem(state);
+            //adds the item to the dropdown menu
+            ddlStates.Items.Add(stateItem);
+        }
+    }
+
+    protected void btnSelectState_Click(object sender, EventArgs e)
+    {
+        //variables to hold the data returned by the query and add it to the dropdown menu
+        List<int> StoreIDs;
+        try
+        {
+            StoreIDs = group04.GetIDsOfAllStoresInAState(ddlStates.Text);
+        }
+        ListItem storeItem;
+
+        // Clear the list box, in case we've already loaded something into it.
+        ddlStates.Items.Clear();
+        // create sql command object with the open connection object
+        comm = new SqlCommand("SELECT DISTINCT Store FROM tStore WHERE State = '" + ddlStates.Text + "'", conn);
+        //try to close the reader in case it's stil open, do nothing if we can't
+        try
+        {
+            reader.Close();
+        }
+        catch (Exception ex)
+        {
+        }
+
+        //use the reader object to execuet our query
+        reader = comm.ExecuteReader();
+
+        //iterate through the dataset line by line
+        while (reader.Read())
+        {
+            //stores the name of the state
+            store = reader.GetString(0);
+            //creates a list item with the text of the name of the state, and the value of the primary key of the state
+            storeItem = new ListItem(store);
+            //adds the item to the dropdown menu
+            ddlStates.Items.Add(storeItem);
+        }
     }
 }
