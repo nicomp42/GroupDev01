@@ -1,4 +1,13 @@
-﻿using System;
+﻿/**
+Connor Tellep
+Jake Reilman
+In class github assignment
+4/5/17
+Web Server App Dev
+IT3047C
+*/
+
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
@@ -6,53 +15,16 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-/*
-private void PopulateDropDown()
-    {
-        //variables to hold the data returned by the query and add it to the dropdown menu
-        int stateID;
-        string state;
-        ListItem stateItem;
-
-        // Clear the list box, in case we've already loaded something into it.
-        ddlStates.Items.Clear();
-        // create sql command object with the open connection object
-        comm = new SqlCommand("SELECT * FROM tRobo", conn);
-        //try to close the reader in case it's stil open, do nothing if we can't
-        try
-        {
-            reader.Close();
-        } catch (Exception ex)
-        {
-        }
-
-        //use the reader object to execuet our query
-        reader = comm.ExecuteReader();
-
-        //iterate through the dataset line by line
-        while (reader.Read())
-        {
-            //stores the primary key of the state
-            stateID = reader.GetInt32(0);
-            //stores the name of the state
-            state = reader.GetString(1);
-            //creates a list item with the text of the name of the state, and the value of the primary key of the state
-            stateItem = new ListItem(state, stateID.ToString());
-            //adds the item to the dropdown menu
-            ddlStates.Items.Add(stateItem);
-        }
-        //populates the options list box with options for the default state in the dropdown
-        PopulateOptionList(Convert.ToInt32(ddlStates.SelectedValue));
-    }
-*/
 
 public partial class _Default : System.Web.UI.Page
 {
 
+    //static variables to hold sql connection, query and reader information
     private static System.Data.SqlClient.SqlConnection conn;
     private static SqlCommand comm;
     private static SqlDataReader reader;
 
+    //static objects to allow methods to be called
     static Group01 group01;
     static Group02 group02;
     static Group03 group03;
@@ -60,6 +32,7 @@ public partial class _Default : System.Web.UI.Page
     static Group05 group05;
     protected void Page_Load(object sender, EventArgs e)
     {
+        //only run this code once
         if (!IsPostBack)
         {
             OpenConnection();
@@ -71,6 +44,9 @@ public partial class _Default : System.Web.UI.Page
         }
     }
 
+    /**
+    * instantiates all of the objects required to call methods
+    */
     private void instantiateObjects()
     {
         group01 = new Group01();
@@ -82,17 +58,23 @@ public partial class _Default : System.Web.UI.Page
 
     }
 
+    //takes a the product ID of the product with the most returns and displays the name and description of the product
     private void Group01Method()
     {
         int productIDWithMostReturns = 0;
 
+        //method can throw an exception
         try
         {
             productIDWithMostReturns = group01.GetProductIDWithTheMostReturns();
         }
         catch (Exception ex)
-        {}
+        {
+            //debug statement
+            //Response.Write(ex.StackTrace);
+        }
 
+        //only runs if the method above succeeds
         if (productIDWithMostReturns != 0)
         {
             comm = new SqlCommand("SELECT tProduct.Description, tName.Name FROM tProduct INNER JOIN tName ON tProduct.NameID = tName.NameID WHERE(tProduct.ProductID = " + productIDWithMostReturns + ")", conn);
@@ -104,10 +86,13 @@ public partial class _Default : System.Web.UI.Page
             catch (Exception ex)
             { }
 
+            //executes a query
             reader = comm.ExecuteReader();
 
+            //sets reader to the data row
             reader.Read();
 
+            //displays the query data in a label
             lblProductWithMostReturns.Text = reader.GetString(0) + reader.GetString(1);
         }
     }
@@ -116,16 +101,20 @@ public partial class _Default : System.Web.UI.Page
     {
         int storeIDWithMostSales = 0;
 
+        //method can throw an exception
         try
         {
             storeIDWithMostSales = group02.GetStoreIDWithTheMostTotalSales();
         }
         catch (Exception ex)
-        { }
+        {
+            //debug statement
+            //Response.Write(ex.StackTrace);
+        }
 
         if (storeIDWithMostSales != 0)
         {
-            comm = new SqlCommand("SELECT Store FROM tStore WHERE StoreID =" + storeIDWithMostSales + ")", conn);
+            comm = new SqlCommand("SELECT Store FROM tStore WHERE StoreID = " + storeIDWithMostSales, conn);
             //try to close the reader in case it's stil open, do nothing if we can't
             try
             {
@@ -134,16 +123,20 @@ public partial class _Default : System.Web.UI.Page
             catch (Exception ex)
             { }
 
+            //executes query
             reader = comm.ExecuteReader();
-
+            
+            //sets reader to first data row
             reader.Read();
 
+            //displays query data in a label
             lblStoreWithMostSales.Text = reader.GetString(0);
         }
     }
 
     private void Group03Method()
     {
+        
         int emplIDWorkedMostDays = 0;
 
         try
@@ -151,11 +144,14 @@ public partial class _Default : System.Web.UI.Page
             emplIDWorkedMostDays = group03.GetEmplIDWhoWorkedTheMostDays();
         }
         catch (Exception ex)
-        { }
+        {
+            //debug statement
+            //Response.Write(ex.StackTrace);
+        }
 
         if (emplIDWorkedMostDays != 0)
         {
-            comm = new SqlCommand("SELECT FirstName, LastName FROM tEmpl WHERE EmplID =" + emplIDWorkedMostDays + ")", conn);
+            comm = new SqlCommand("SELECT FirstName, LastName FROM tEmpl WHERE EmplID =" + emplIDWorkedMostDays, conn);
             //try to close the reader in case it's stil open, do nothing if we can't
             try
             {
@@ -164,10 +160,13 @@ public partial class _Default : System.Web.UI.Page
             catch (Exception ex)
             { }
 
+            //executes query
             reader = comm.ExecuteReader();
 
+            //sets reader to first data row
             reader.Read();
 
+            //displays query data in a label
             lblEmployeeWhoWorkedMost.Text = reader.GetString(0);
         }
     }
@@ -235,8 +234,7 @@ public partial class _Default : System.Web.UI.Page
             reader.Close();
         }
         catch (Exception ex)
-        {
-        }
+        {}
 
         //use the reader object to execuet our query
         reader = comm.ExecuteReader();
@@ -256,38 +254,39 @@ public partial class _Default : System.Web.UI.Page
     protected void btnSelectState_Click(object sender, EventArgs e)
     {
         //variables to hold the data returned by the query and add it to the dropdown menu
-        List<int> StoreIDs;
+        List<int> StoreIDs = null;
+
         try
         {
             StoreIDs = group04.GetIDsOfAllStoresInAState(ddlStates.Text);
         }
-        ListItem storeItem;
-
-        // Clear the list box, in case we've already loaded something into it.
-        ddlStates.Items.Clear();
-        // create sql command object with the open connection object
-        comm = new SqlCommand("SELECT DISTINCT Store FROM tStore WHERE State = '" + ddlStates.Text + "'", conn);
-        //try to close the reader in case it's stil open, do nothing if we can't
-        try
+        catch(Exception ex)
         {
-            reader.Close();
+            //debug statement
+            //Response.Write(ex.StackTrace);
         }
-        catch (Exception ex)
-        {
-        }
-
-        //use the reader object to execuet our query
-        reader = comm.ExecuteReader();
+        //clears the listbox of any items inside
+        lbStores.Items.Clear();
 
         //iterate through the dataset line by line
-        while (reader.Read())
+        foreach (int StoreID in StoreIDs)
         {
-            //stores the name of the state
-            store = reader.GetString(0);
-            //creates a list item with the text of the name of the state, and the value of the primary key of the state
+            ListItem storeItem;
+            comm = new SqlCommand("SELECT Store FROM tStore WHERE StoreID = '" + StoreID + "'", conn);
+            //try to close the reader in case it's stil open, do nothing if we can't
+            try
+            {
+                reader.Close();
+            }
+            catch (Exception ex)
+            {}
+
+            //use the reader object to execuet our query
+            reader = comm.ExecuteReader();
+            reader.Read();
+            string store = reader.GetString(0);
             storeItem = new ListItem(store);
-            //adds the item to the dropdown menu
-            ddlStates.Items.Add(storeItem);
+            lbStores.Items.Add(storeItem);
         }
     }
 }

@@ -21,12 +21,11 @@ public class Group04 {
     private static SqlDataReader reader;
     private static SqlCommand comm;
 
-    public Group04(string storeID) {
-        GetIDsOfAllStoresInAState(storeID);
+    public Group04() {
     }
     public List<int> GetIDsOfAllStoresInAState(string stateID) {
         try {
-            OpenConnection("GroceryStoreSimulator");
+            OpenConnection("GroceryStoreSimulatorConnectionString");
         }
         catch (Exception) {
             throw new Exception("Group04.GetIDsOfAllStoresInAState(string stateID) connection failed to open.");

@@ -56,7 +56,8 @@
         </div>
         <div class="row">
             <div class="ten columns offset-by-one">
-                <asp:ListBox ID="lbStores" runat="server"></asp:ListBox>
+                <br />
+                <asp:ListBox ID="lbStores" height="200px" CssClass="u-full-width" runat="server"></asp:ListBox>
             </div>
         </div>
         <hr />
