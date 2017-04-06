@@ -17,8 +17,8 @@ public class Group05 {
         // TODO: Add constructor logic here
         //
     }
-    public int GetProductIDOfTheProductThatHasBeenReturnedTheMost() {
-        throw new Exception("Group05.GetProductIDOfTheProductThatHasBeenReturnedTheMost(): Not implemented");
+    public int GetCountOfTheProductThatHasBeenReturnedTheMost() {
+        throw new Exception("Group05.GetCountOfTheProductThatHasBeenReturnedTheMost(): Not implemented");
         //return -1;
     }
 }
